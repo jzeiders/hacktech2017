@@ -6,6 +6,6 @@ app.get("/test", function(req,res){
     res.send("TEST")
 })
 
-app.listen(8888, function(){
+app.listen(process.env.port || 8888, function(){
     console.log("WE GOT A SERVER")
 });
