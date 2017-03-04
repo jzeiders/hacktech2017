@@ -19,6 +19,7 @@ app.get("/test", function (req, res) {
 });
 
 app.post("/caption", function (req, res) {
+    console.log("Recieved Request");
     var url = req.body.imgURL;
     vision
         .getCaptionData(url)
