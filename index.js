@@ -3,8 +3,7 @@ require('dotenv').config();
 const express = require('express'),
     app = express(),
     db = require('./databases/db.js'),
-    storage = require('./databases/storage.js'),
-    vision = require('./vision.js'),
+    handlers = require("./handlers"),
     bodyParser = require('body-parser'),
     multer = require('multer'),
     upload = multer({
@@ -31,26 +30,38 @@ app.post("/caption", function (req, res) {
         });
 });
 app.post("/photo", upload.single("photo"), function (req, res) {
-    console.log(req.file);
-    storage.uploadPhoto(req.file);
-    res.send("Recieved Photo");
+    handlers.photo(req).then((success)=>{
+        res.send(success);
+    }).catch((err) => {
+        res.send(err);
+    });
 })
-app.post("/addPhoto", function (req, res) {
-    var url = req.body.imgURL,
-        point = [
-            1, 2
-        ],
-        tags = "SAM DARNOLD";
-    db
-        .Photo
-        .create({url: url, lat: point[0], lng: point[1], tags: tags, caption: "TEST CAPTION"})
-        .then((response) => {
-            res.send(response)
-        })
-        .catch((err) => {
-            res.send(err);
-        });
+
+app.get("/allPhotos", function(req,res){
+    handlers.getAllPhotos().then((photos)=>{
+        console.log(photos);
+        res.send(photos);
+    }).catch((err)=>{
+        console.log("FUCK")
+        res.send(err);
+    });
 })
+// app.post("/addPhoto", function (req, res) {
+//     var url = req.body.imgURL,
+//         point = [
+//             1, 2
+//         ],
+//         tags = "SAM DARNOLD";
+//     db
+//         .Photo
+//         .create({url: url, lat: point[0], lng: point[1], tags: tags, caption: "TEST CAPTION"})
+//         .then((response) => {
+//             res.send(response)
+//         })
+//         .catch((err) => {
+//             res.send(err);
+//         });
+// })
 
 app.listen(process.env.port || 8888, function () {
     console.log("WE GOT A SERVER")

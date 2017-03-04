@@ -5,7 +5,6 @@ const request = require("request");
 class visionAPI {
     constructor() {}
     static getCaptionData(url) {
-        console.log(url);
         return new Promise((res, rej) => {
             var requestData = {
                 url: VISION_URL,
@@ -19,10 +18,10 @@ class visionAPI {
             request.post(requestData, function (err, response, body) {
                 if (err) 
                     rej(err);
+                body.url = url;
                 res(body);
             })
-        })
-
+        });
     }
 };
 
