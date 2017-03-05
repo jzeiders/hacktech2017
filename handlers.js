@@ -20,8 +20,8 @@ class handlers {
                 console.log(imageData);
                 var photo = {
                     url: imageData.url,
-                    lat: req.body.lat,
-                    lng: req.body.lng,
+                    lat: parseFloat(req.body.lat),
+                    lng: parseFLoat(req.body.lng),
                     tags: imageData
                         .description
                         .tags
