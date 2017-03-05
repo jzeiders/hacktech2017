@@ -110,7 +110,15 @@ class handlers {
                 }
             })
     }
-
+    static getUserData(key) {
+        return db
+            .Photo
+            .findAll({
+                where: {
+                    userid: key
+                }
+            })
+    }
 }
 
 module.exports = handlers;

@@ -5,8 +5,8 @@ import App from './app.jsx';
 import styles from './index.scss';
 
 render(
-    <AppContainer>
-    <App/>
+    <AppContainer className={styles.maxHeight}>
+    <App className={styles.maxHeight}/>
 </AppContainer>, document.querySelector("#app"));
 
 if (module && module.hot) {
@@ -15,8 +15,8 @@ if (module && module.hot) {
         .accept('./app.jsx', () => {
             const App = require('./app.jsx').default;
             render(
-                <AppContainer>
-                <App/>
+                <AppContainer className={styles.maxHeight}>
+                <App className={styles.maxHeight}/>
             </AppContainer>, document.querySelector("#app"));
         });
 }

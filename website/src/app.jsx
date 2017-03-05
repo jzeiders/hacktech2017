@@ -13,11 +13,11 @@ export default class App extends React.Component {
     }
     render() {
         return (
-            <Router style={"height:100%"} history={hashHistory}>
-                <Route path="/" component={HeaderComponent}>
-                    <IndexRoute component={LoginComponent}/>
-                    <Route path="map" component={MapComponent}/>
-                    <Route path="stats" component={StatsComponent}/>
+            <Router style={{height:"100%"}} history={hashHistory}>
+                <Route style={{height:"100%"}} path="/" component={HeaderComponent}>
+                    <IndexRoute style={{height:"100%"}} component={LoginComponent}/>
+                    <Route style={{height:"100%"}} path="map" component={MapComponent}/>
+                    <Route style={{height:"100%"}} path="stats" component={StatsComponent}/>
                 </Route>
             </Router>
         )

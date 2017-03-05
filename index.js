@@ -31,6 +31,7 @@ app.post("/caption", function (req, res) {
             console.log(rej);
         });
 });
+
 app.post("/photo", upload.single("photo"), function (req, res) {
     handlers.photo(req).then((success)=>{
         res.send(success);
@@ -38,7 +39,7 @@ app.post("/photo", upload.single("photo"), function (req, res) {
         console.log("Failed", err);
         res.send(err);
     });
-})
+});
 
 app.get("/allPhotos", function(req,res){
     handlers.getAllPhotos().then((photos)=>{
@@ -48,7 +49,8 @@ app.get("/allPhotos", function(req,res){
         console.log("FUCK")
         res.send(err);
     });
-})
+});
+
 app.post("/photoNearby", function(req,res){
     console.log(req.body);
     handlers.getAllNearby(req.body.lat,req.body.lng).then((photos)=>{
@@ -56,7 +58,8 @@ app.post("/photoNearby", function(req,res){
     }).catch((err)=>{
         res.send(err);
     });
-})
+});
+
 app.post("/emotions",function(req,res){
     vision.getEmotions(req.body.url).then((data) => {
         console.log("WTF");
@@ -66,15 +69,25 @@ app.post("/emotions",function(req,res){
         console.log("Error")
         res.end(err);
     });
-})
+});
+
 app.get("/id", function(req,res){
     var id = req.query.id;
     handlers.getData(id).then((data)=>{
         res.send(data)
     }).catch((err)=>{
         res.send(err);
-    })
-})
+    });
+});
+
+app.get("/user", function(req,res){
+    var userid = req.query.id;
+    handlers.getUserData(userid).then((data)=>{
+        res.send(data)
+    }).catch((err)=>{
+        res.send(err);
+    });
+});
 
 app.get("/", function(req,res){
     res.sendFile(path.join(__dirname + '/website/public/index.html'));

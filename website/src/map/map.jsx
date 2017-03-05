@@ -29,37 +29,13 @@ export default class MapComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            map: null,
-            meteorLayer: null,
-            crashLayer: null,
-            strikeLayer: null,
-            policeLayer: null,
-            values: null
+            map: null
         }
     }
     componentDidMount() {
         if (!this.state.map) 
             this.init(this._mapNode);
-        this
-            .getData()
-            .then((data) => {
-                console.log(data);
-                let baseLayers = {
-                    "Dark": this.state.darkGray,
-                    "Topographic": this.state.topographic,
-                    "Streets": this.state.streets
-                }
-                L
-                    .control
-                    .layers(baseLayers)
-                    .addTo(this.state.map);
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-    }
+        }
     toGeo(geojson) {
         var obj = {
             "type": "Feature Collection",
@@ -79,7 +55,6 @@ export default class MapComponent extends React.Component {
         const popupContent = `<p>${feature.properties.popupContent}</p>`;
         layer.bindPopup(popupContent);
     }
-
     zoomToLocation(pos) {
         this
             .state
@@ -90,14 +65,6 @@ export default class MapComponent extends React.Component {
             .map
             .invalidateSize();
     };
-    changeBase(base) {
-        if (base == 0) 
-            this.state.darkGray.bringToFront();
-        if (base == 1) 
-            this.state.topographic.bringToFront();
-        if (base == 2) 
-            this.state.streets.bringToFront();
-        }
     zoomToFeature(target) {
         var fitBoundsParams = {
             paddingTopLeft: [
@@ -124,26 +91,16 @@ export default class MapComponent extends React.Component {
             .control
             .scale({position: "bottomright"})
             .addTo(map);
-        let darkGray = L
-            .esri
-            .basemapLayer('DarkGray')
-            .addTo(map);
-        let topographic = L
-            .esri
-            .basemapLayer('Topographic')
-            .addTo(map);
         let streets = L
             .esri
             .basemapLayer('Streets')
             .addTo(map);
-
-        this.setState({darkGray, topographic, streets});
         this.setState({map});
     }
     render() {
         return (
             <div id="mapUI" className={styles.maxHeight}>
-                <div ref={(node) => this._mapNode = node} id="map"/>
+                <div ref={(node) => this._mapNode = node} id="map" className={mapStyles.map}/>
             </div>
         )
     }
