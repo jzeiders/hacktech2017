@@ -1,6 +1,7 @@
 const azure = require("azure-storage"),
     streamifier = require("streamifier"),
-    jimp = require('jimp');
+    jimp = require('jimp'),
+    uuid = require("node-uuid");
 
 const blobSvc = azure.createBlobService();
 const baseUrl = "https://turestorage.blob.core.windows.net/photos/"
@@ -22,14 +23,15 @@ class storage {
                         .getBuffer(jimp.MIME_PNG, function (err, smallBuffer) {
                             console.log("resized");
                             var stream = streamifier.createReadStream(smallBuffer);
-                            blobSvc.createBlockBlobFromStream('photos', file.originalname, stream, file.size, function (error, result, response) {
+                            var urlId = uuid.v4();
+                            blobSvc.createBlockBlobFromStream('photos', urlId, stream, file.size, function (error, result, response) {
                                 console.log(error, result, response);
                                 if (error) {
                                     console.log("Couldn't upload stream");
-                                    rej(error)
+                                    rej(error);
                                 } else {
                                     console.log('Stream uploaded successfully');
-                                    res(baseUrl + file.originalname);
+                                    res(baseUrl + urlId);
                                 }
                             });
                         })

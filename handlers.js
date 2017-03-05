@@ -1,6 +1,8 @@
 const storage = require('./databases/storage.js'),
     vision = require('./vision'),
-    db = require('./databases/db.js');
+    db = require('./databases/db.js'),
+    uuid = require('node-uuid');
+    
 
 class handlers {
     static photo(req) {
