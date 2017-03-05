@@ -33,6 +33,7 @@ app.post("/photo", upload.single("photo"), function (req, res) {
     handlers.photo(req).then((success)=>{
         res.send(success);
     }).catch((err) => {
+        console.log("Failed", err);
         res.send(err);
     });
 })

@@ -20,6 +20,7 @@ class storage {
                     image
                         .resize(250, jimp.AUTO)
                         .getBuffer(jimp.MIME_PNG, function (err, smallBuffer) {
+                            console.log("resized");
                             var stream = streamifier.createReadStream(smallBuffer);
                             blobSvc.createBlockBlobFromStream('photos', file.originalname, stream, file.size, function (error, result, response) {
                                 console.log(error, result, response);

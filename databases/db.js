@@ -8,6 +8,11 @@ var sequelize = new Sequelize('tureDB', 'jzeiders', 'Hacktech2017', {
 });
 
 var Photo = sequelize.define('photo', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     url: {
         type: Sequelize.STRING,
         field: "url"
@@ -28,11 +33,6 @@ var Photo = sequelize.define('photo', {
         type: Sequelize.STRING,
         field: "caption" 
     }
-}, {
-    indexes: [{
-        type: "UNIQUE",
-        fields: ["url"]
-    }]
 });
 
 sequelize
