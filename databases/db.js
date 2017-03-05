@@ -13,11 +13,11 @@ var Photo = sequelize.define('photo', {
         field: "url"
     },
     lat: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         field: 'lat'
     },
     lng: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         field: "lng"
     },
     tags: {
