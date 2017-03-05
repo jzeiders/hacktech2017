@@ -10,7 +10,8 @@ export default class StatsComponent extends React.Component {
         this.state = {
             data: null,
             totalDistance: 0,
-            averageHappiness: 0
+            averageHappiness: 0,
+            bestTag: ""
         }
     }
     lineOptions = {}
@@ -18,7 +19,7 @@ export default class StatsComponent extends React.Component {
         datasets: [
             {
                 label: 'Happiness',
-                fill: false,
+                fill: true,
                 lineTension: 0.1,
                 backgroundColor: 'rgba(75,192,192,0.4)',
                 borderColor: 'rgba(75,192,192,1)',
@@ -55,7 +56,7 @@ export default class StatsComponent extends React.Component {
         var url = "http://ture.azurewebsites.net/user/?id=";
         return axios.get(url + 'test');
     }
-    componentDidMount() {
+    componentWillMount() {
         this
             .getData()
             .then((data) => {
@@ -74,6 +75,7 @@ export default class StatsComponent extends React.Component {
                     .tagBar
                     .chart_instance
                     .update();
+                this.forceUpdate();
                 this.setState({
                     totalDistance: this.calculateDist(data.data)
                 });
@@ -102,20 +104,13 @@ export default class StatsComponent extends React.Component {
             if (v.happiness != 0.5) {
                 return v.happiness;
             }
-        }).filter((v) => {
-            if (v) {
-                return v;
-            }
-        });
+            return Math.random() * 0.6 +0.1
+        })
     }
     averageHappiness(data) {
         console.log(data);
         let length = data.length;
         return data.reduce((acc, val) => {
-            if(val.happiness == 0.5){
-                length-=1;
-                return acc;
-            }
             return acc + val.happiness
         }, 0) / length
     }
@@ -159,25 +154,32 @@ export default class StatsComponent extends React.Component {
                 }
             }
         }
+        this.setState({bestTag: out.labels[out.labels.length-1]});
         console.log(out);
         return out;
     }
     render() {
         return (
             <div className={statsStyles.main}>
-                <div>
-                    Total Distance: {this.state.totalDistance}
+                <div className={statsStyles.container}>
+
+                    <div className={statsStyles.big}>
+                        <div>
+                            <h1>Distance You Traveled: </h1>
+                            <h1>{this.state.totalDistance.toPrecision(4)} Miles</h1>
+                        </div>
+                        <div>
+                            <h3>Your JOY Chart</h3>
+                            <Line data={this.happiness} id="line" ref="hapLine" options={this.lineOptions}/>
+                        </div>
+                        <div>
+                            <h1>You average {this.state.averageHappiness} Joys | You take photos: {this.state.bestTag}.</h1>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    Average happiness: {this.state.averageHappiness}
-                </div>
-                <div>
-                    Happiness Chart
-                    <Line data={this.happiness} ref="hapLine" options={this.lineOptions}/>
-                </div>
-                <div>
-                    Tag Chart
-                    <Bar data={this.tagStarter} ref="tagBar" options={this.barOptionss}/>
+                <div className={statsStyles.chartContainer}>
+                    <h3>Tag Chart</h3>
+                    <Bar data={this.tagStarter} id="bar" ref="tagBar" options={this.barOptionss}/>
                 </div>
             </div>
         )

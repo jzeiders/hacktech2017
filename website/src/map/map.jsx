@@ -56,13 +56,11 @@ export default class MapComponent extends React.Component {
                     .map((e) => {
                         this.createMarker(e);
                     });
-    
                 this.createTripLine();
                 this
                     .state
                     .map
-                    .setZoomAround(this.state.markers[0].getLatLng(), 8);
-                this.state.markers[0].openPopup()
+                    .setZoomAround(this.state.markers[0].getLatLng(), 4);
             })
             .catch((err) => {
                 console.log(err);
@@ -85,7 +83,7 @@ export default class MapComponent extends React.Component {
     createMarker(e) {
         console.log(e);
         var marker = L.marker(L.latLng(e.lat, e.lng), markerParams);
-        marker.bindPopup(this.createPopup(e), {closeButton: false});
+        marker.bindPopup(this.createPopup(e), {closeButton: false, keepInView:true});
         this.setState({
             markers: [
                 ...this.state.markers,
@@ -100,16 +98,14 @@ export default class MapComponent extends React.Component {
             .markers
             .map((e, i) => {
                 setTimeout((i) => {
-                    if (i > 0 && i < this.state.markers.length - 1) {
-                        var bounds = L.latLngBounds(this.state.markers[i - 1].getLatLng(), this.state.markers[i + 1].getLatLng());
+                    if (i == 0) {
+                        var bounds = L.latLngBounds(this.state.markers[i].getLatLng(), this.state.markers[i + 1].getLatLng());
                         this
                             .state
                             .map
-                            .fitBounds(bounds);
+                            .fitBounds(bounds, {animate:true});
                     }
-                    setTimeout(() => {
-                        e.openPopup();
-                    }, 100)
+                    e.openPopup();
 
                 }, 2500 * i, i);
             })
@@ -207,7 +203,6 @@ export default class MapComponent extends React.Component {
         return (
             <div className={styles.maxHeight}>
                 <div className={this.state.started? styles.hidden : mapStyles.start}>
-                    <p><b>Start your story</b></p>
                     <i  onClick={this.animate.bind(this)} className={"fa fa-play"}></i>
                 </div>
                 
