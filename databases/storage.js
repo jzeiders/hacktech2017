@@ -1,7 +1,7 @@
 const azure = require("azure-storage"),
     streamifier = require("streamifier"),
     jimp = require('jimp'),
-    uuid = require("node-uuid");
+    uuid = require("uuid");
 
 const blobSvc = azure.createBlobService();
 const baseUrl = "https://turestorage.blob.core.windows.net/photos/"
