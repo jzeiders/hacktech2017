@@ -1,6 +1,5 @@
 const storage = require('./databases/storage.js'),
     vision = require('./vision'),
-    sharp = require('sharp'),
     db = require('./databases/db.js');
 
 class handlers {
