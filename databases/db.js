@@ -32,6 +32,10 @@ var Photo = sequelize.define('photo', {
     caption: {
         type: Sequelize.STRING,
         field: "caption" 
+    },
+    happiness: {
+        type: Sequelize.FLOAT,
+        field: 'happiness'
     }
 });
 

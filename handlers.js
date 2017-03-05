@@ -34,6 +34,19 @@ class handlers {
             })
             .then((result) => {
                 console.log("Added to DB?")
+                vision
+                    .getEmotions(result.url)
+                    .then((emotion) => {
+                        db
+                            .Photo
+                            .update({
+                                happiness: emotion
+                            }, {
+                                where: {
+                                    url: result.url
+                                }
+                            })
+                    })
                 return result;
             });
     }

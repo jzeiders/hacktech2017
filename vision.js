@@ -25,6 +25,7 @@ class visionAPI {
         });
     }
     static getEmotions(url) {
+        console.log(url);
         return new Promise((res,rej) => {
             var requestData = {
                 url: EMOTION_URL,
@@ -38,8 +39,9 @@ class visionAPI {
             request.post(requestData, function (err, response, body) {
                 if (err) 
                     rej(err);
-                body.url = url;
-                res(body.scores.happiness);
+                if(body[0])
+                    res(body[0].scores.happiness);
+                res(0.5);
             })
         });
     }

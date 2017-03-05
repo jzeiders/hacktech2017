@@ -59,7 +59,8 @@ app.post("/photoNearby", function(req,res){
 app.post("/emotions",function(req,res){
     vision.getEmotions(req.body.url).then((data) => {
         console.log("WTF");
-        res.send(data);
+        console.log(data);
+        res.send(data.toString());
     }).catch((err) => {
         console.log("Error")
         res.end(err);
