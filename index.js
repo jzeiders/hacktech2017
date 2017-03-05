@@ -88,9 +88,11 @@ app.get("/user", function(req,res){
         res.send(err);
     });
 });
+app.use(express.static(path.resolve(__dirname, 'website', 'public')));
+
 
 app.get("/", function(req,res){
-    res.sendFile(path.join(__dirname + '/website/public/index.html'));
+    res.sendFile(path.resolve(__dirname,'website/public/index.html'));
 });
 
 app.use(function(req, res){
