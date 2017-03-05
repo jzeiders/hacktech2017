@@ -2,7 +2,6 @@ const storage = require('./databases/storage.js'),
     vision = require('./vision'),
     db = require('./databases/db.js'),
     uuid = require('node-uuid');
-    
 
 class handlers {
     static photo(req) {
@@ -42,8 +41,43 @@ class handlers {
     static getAllPhotos() {
         return db
             .Photo
-            .findAll();
+            .findAll({
+                order: [
+                    ["createdAt", "DESC"]
+                ]
+            });
     }
+    static getAllNearby(lat, lng) {
+        lat = parseFloat(lat);
+        lng = parseFloat(lng);
+        return db
+            .Photo
+            .findAll({
+                where: {
+                    $and: [
+                        {
+                            lng: {
+                                $between: [
+                                    lng - 1,
+                                    lng + 1
+                                ]
+                            }
+                        }, {
+                            lat: {
+                                $between: [
+                                    lat - 1,
+                                    lat + 1
+                                ]
+                            }
+                        }
+                    ]
+                },
+                order: [
+                    ["createdAt", "DESC"]
+                ]
+            })
+    }
+
 }
 
 module.exports = handlers;

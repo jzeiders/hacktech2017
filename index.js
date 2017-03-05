@@ -40,29 +40,25 @@ app.post("/photo", upload.single("photo"), function (req, res) {
 
 app.get("/allPhotos", function(req,res){
     handlers.getAllPhotos().then((photos)=>{
-        console.log(photos);
+        console.log("Found Photos");
         res.send(photos);
     }).catch((err)=>{
         console.log("FUCK")
         res.send(err);
     });
 })
-// app.post("/addPhoto", function (req, res) {
-//     var url = req.body.imgURL,
-//         point = [
-//             1, 2
-//         ],
-//         tags = "SAM DARNOLD";
-//     db
-//         .Photo
-//         .create({url: url, lat: point[0], lng: point[1], tags: tags, caption: "TEST CAPTION"})
-//         .then((response) => {
-//             res.send(response)
-//         })
-//         .catch((err) => {
-//             res.send(err);
-//         });
-// })
+app.post("/photoNearby", function(req,res){
+    console.log(req.body);
+    handlers.getAllNearby(req.body.lat,req.body.lng).then((photos)=>{
+        res.send(photos);
+    }).catch((err)=>{
+        res.send(err);
+    });
+})
+
+app.use(function(req, res){
+   res.sendStatus(404);
+});
 
 app.listen(process.env.port || 8888, function () {
     console.log("WE GOT A SERVER")

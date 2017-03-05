@@ -36,7 +36,7 @@ var Photo = sequelize.define('photo', {
 });
 
 sequelize
-    .sync({force: true})
+    .sync()
     .then((res) => {
         console.log("Connected to DB");
     })
@@ -45,3 +45,4 @@ sequelize
         console.log("Failed to connect to DB");
     })
 exports.Photo = Photo;
+exports.sequelize = sequelize;
