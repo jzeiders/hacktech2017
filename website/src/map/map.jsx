@@ -50,24 +50,19 @@ export default class MapComponent extends React.Component {
             .then((data) => {
                 console.log(data);
                 this.setState({data: data.data});
-                this
-                    .props
-                    .updateData(data.data);
+                this.props.updateData(data.data);
                 data
                     .data
                     .map((e) => {
                         this.createMarker(e);
                     });
-
+    
                 this.createTripLine();
                 this
                     .state
                     .map
                     .setZoomAround(this.state.markers[0].getLatLng(), 8);
-                this
-                    .state
-                    .markers[0]
-                    .openPopup();
+                this.state.markers[0].openPopup()
             })
             .catch((err) => {
                 console.log(err);
@@ -90,11 +85,7 @@ export default class MapComponent extends React.Component {
     createMarker(e) {
         console.log(e);
         var marker = L.marker(L.latLng(e.lat, e.lng), markerParams);
-        marker.bindPopup(this.createPopup(e), {
-            closeButton: false,
-            autoPanPaddingTopLeft: L.point(0, 0),
-            keepInView: true
-        });
+        marker.bindPopup(this.createPopup(e), {closeButton: false});
         this.setState({
             markers: [
                 ...this.state.markers,
@@ -109,9 +100,8 @@ export default class MapComponent extends React.Component {
             .markers
             .map((e, i) => {
                 setTimeout((i) => {
-                    // this     .state     .map     .panTo(e.getLatLng());
                     if (i > 0 && i < this.state.markers.length - 1) {
-                        var bounds = L.latLngBounds(this.state.markers[i].getLatLng(), this.state.markers[i + 1].getLatLng());
+                        var bounds = L.latLngBounds(this.state.markers[i - 1].getLatLng(), this.state.markers[i + 1].getLatLng());
                         this
                             .state
                             .map
@@ -119,7 +109,7 @@ export default class MapComponent extends React.Component {
                     }
                     setTimeout(() => {
                         e.openPopup();
-                    }, 200)
+                    }, 100)
 
                 }, 2500 * i, i);
             })
@@ -216,26 +206,18 @@ export default class MapComponent extends React.Component {
     render() {
         return (
             <div className={styles.maxHeight}>
-                <div
-                    className={this.state.started
-                    ? styles.hidden
-                    : mapStyles.start}>
-                    <p>
-                        <b>Start your story</b>
-                    </p>
-                    <i
-                        onClick={this
-                        .animate
-                        .bind(this)}
-                        className={"fa fa-play"}></i>
+                <div className={this.state.started? styles.hidden : mapStyles.start}>
+                    <p><b>Start your story</b></p>
+                    <i  onClick={this.animate.bind(this)} className={"fa fa-play"}></i>
                 </div>
-
+                
+                
                 <div id="mapUI" className={styles.maxHeight}>
                     <div ref={(node) => this._mapNode = node} id="map" className={mapStyles.map}/>
                 </div>
                 <h1 className={mapStyles.arrow}>
                     <Link to="/stats">
-                        <i className={"fa fa-angle-right"}></i>
+                    <i className={"fa fa-angle-right"}></i>
                     </Link>
                 </h1>
             </div>
