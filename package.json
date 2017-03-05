@@ -17,8 +17,8 @@
 	"bugs": {
 		"url": "https://github.com/jzeiders/hacktech2017/issues"
 	},
-	"engine": {
-		"node":"7.4.0"
+	"engines": {
+		"node":"6.1.0"
 	},
 	"homepage": "https://github.com/jzeiders/hacktech2017#readme",
 	"dependencies": {
