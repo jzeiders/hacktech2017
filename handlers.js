@@ -21,7 +21,7 @@ class handlers {
                 var photo = {
                     url: imageData.url,
                     lat: parseFloat(req.body.lat),
-                    lng: parseFLoat(req.body.lng),
+                    lng: parseFloat(req.body.lng),
                     tags: imageData
                         .description
                         .tags
