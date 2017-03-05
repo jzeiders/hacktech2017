@@ -67,6 +67,6 @@ app.listen(process.env.port || 8888, function () {
     console.log("WE GOT A SERVER")
 });
 
-process.on('uncaughtException', (err) => {
-    console.log(err);
-});
+// process.on('uncaughtException', (err) => {
+//     console.log(err);
+// });
