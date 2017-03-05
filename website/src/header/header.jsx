@@ -9,9 +9,9 @@ export default class HeaderComponent extends React.Component {
     render() {
         return (
             <div>
-                <div className={headerStyles.bar}>
+                {/*<div className={headerStyles.bar}>
                     This is Header
-                </div>
+                </div>*/}
                 {this.props.children}
             </div>
         )

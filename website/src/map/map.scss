@@ -6,5 +6,34 @@
   width: auto;
   margin-left: 0em;
   margin-right: 0em;
-  margin-bottom: 2em;
+  margin-bottom: 0em;
+  z-index: -1;
+}
+
+.arrow {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    bottom: 50%;
+    font-size: 7em;
+    color: rgba(100,100,100, 0.7);
+    z-index: 9;
+}
+
+.start {
+    position: absolute;
+    left: 4%;
+    top: 5%;
+    font-weight: 500;
+    padding: 1em 1em 1em 1em;
+    border-radius: 1em;
+    color: black;
+    background-color: rgba(160,160,160, 0.2);
+
+    i {
+        left: 10%;
+        color: rgba(100,100,100, 0.7);
+        font-size: 7em;
+        text-align: center;
+    }
 }
