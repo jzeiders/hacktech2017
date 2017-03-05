@@ -47,6 +47,17 @@ class handlers {
                                 }
                             })
                     })
+                if (req.body.userid) {
+                    db
+                        .Photo
+                        .update({
+                            userid: req.body.userid
+                        }, {
+                            where: {
+                                url: result.url
+                            }
+                        })
+                }
                 return result;
             });
     }

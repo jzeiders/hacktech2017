@@ -9,7 +9,8 @@ const express = require('express'),
     upload = multer({
         storage: multer.memoryStorage()
     }),
-    vision = require('./vision.js');
+    vision = require('./vision.js'),
+    path = require('path');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -74,6 +75,10 @@ app.get("/id", function(req,res){
         res.send(err);
     })
 })
+
+app.get("/", function(req,res){
+    res.sendFile(path.join(__dirname + '/website/public/index.html'));
+});
 
 app.use(function(req, res){
    res.sendStatus(404);
