@@ -8,7 +8,8 @@ const express = require('express'),
     multer = require('multer'),
     upload = multer({
         storage: multer.memoryStorage()
-    });
+    }),
+    vision = require('./vision.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -54,6 +55,23 @@ app.post("/photoNearby", function(req,res){
     }).catch((err)=>{
         res.send(err);
     });
+})
+app.post("/emotions",function(req,res){
+    vision.getEmotions(req.body.url).then((data) => {
+        console.log("WTF");
+        res.send(data);
+    }).catch((err) => {
+        console.log("Error")
+        res.end(err);
+    });
+})
+app.get("/id", function(req,res){
+    var id = req.query.id;
+    handlers.getData(id).then((data)=>{
+        res.send(data)
+    }).catch((err)=>{
+        res.send(err);
+    })
 })
 
 app.use(function(req, res){

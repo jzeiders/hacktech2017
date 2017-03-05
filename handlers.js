@@ -77,6 +77,15 @@ class handlers {
                 ]
             })
     }
+    static getData(key) {
+        return db
+            .Photo
+            .findAll({
+                where: {
+                    id: key
+                }
+            })
+    }
 
 }
 
